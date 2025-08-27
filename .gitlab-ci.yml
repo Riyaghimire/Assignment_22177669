@@ -1,6 +1,8 @@
-run_tests:
-  image: python:3.9-slim
-  before_script:    
-    - apt-get update && apt-get install make    
+stages: [announce]
+
+announcce:
+  stage: announce
+  image: alpine:3.20
   script:
-    - make test
+     - echo "Hi this is Riya, my student ID is 22177669."
+     
