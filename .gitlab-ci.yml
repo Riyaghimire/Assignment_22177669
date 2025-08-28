@@ -1,13 +1,7 @@
 stages:
- - announce
- - build
-
-     
-announcce:
-  stage: announce
-  image: alpine:3.20
-  script:
-     - echo "Hi this is Riya, my student ID is 22177669."
-
-include:
- - local: 'ci/step2-ci.yml'
+ - test
+hello_job:
+   stage: test
+   script:
+    - echo "pipeline working"
+    
