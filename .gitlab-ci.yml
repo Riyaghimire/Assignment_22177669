@@ -1,7 +1,16 @@
 stages:
  - test
-hello_job:
+ - deploy
+
+test_job:
    stage: test
    script:
-    - echo "pipeline working"
+    - echo " hi all, my name is Riya Ghimire.Myy student ID is 22177669"
+
+deploy_job:
+   stage: deploy
+   script:
+    -echo "Hi my name is riya and my student id is 22177669"
+   rules:
+   - if: '$CI_COMMIT-BRANCH == "main"'
     
