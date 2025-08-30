@@ -1,6 +1,6 @@
 variables:
   IMAGE_NAME: "rimishghimire/assignment_22177669d"
-  IMAGE_TAG: "step4"
+  IMAGE_TAG: "step5"
 
 run_tests:
   image: python:3.9-slim
@@ -10,6 +10,7 @@ run_tests:
     - make test
 
 build_image:
+  stage: build
   image: docker:28.3.3
   services:
     - docker:28.3.3-dind
