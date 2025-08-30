@@ -1,7 +1,11 @@
+variables:
+  IMAGE_NAME: "rimishghimire/assignment_22177669d"
+  IMAGE_TAG: "step4"
+
 run_tests:
   image: python:3.9-slim
   before_script:
-    - apt-get update && apt-get install make
+    - apt-get update && apt-get install -y make
   script:
     - make test
 
@@ -12,7 +16,7 @@ build_image:
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   before_script:
-    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
-    - docker build -t ImageName:ImageTag .
-    - docker push ImageName:ImageTag
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker push $IMAGE_NAME:$IMAGE_TAG
