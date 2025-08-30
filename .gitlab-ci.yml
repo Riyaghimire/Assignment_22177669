@@ -1,16 +1,21 @@
 stages:
- - test
- - deploy
+  - build
+  - push
 
-test_job:
-   stage: test
-   script:
-    - echo " hi all, my name is Riya Ghimire.Myy student ID is 22177669"
+variables:
+  DOCKER_HUB_USERNAME: "rimishghimire"
+  DOCKER_HUB_PASSWORD: "your_dockerhub_password"
+  IMAGE_NAME: "rimishghimire/assignment_22177669d:step3"
 
-deploy_job:
-   stage: deploy
-   script:
-    -echo "Hi my name is riya and my student id is 22177669"
-   rules:
-   - if: '$CI_COMMIT-BRANCH == "main"'
-    
+before_script:
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+
+build:
+  stage: build
+  script:
+    - docker build -t $IMAGE_NAME .
+
+push:
+  stage: push
+  script:
+    - docker push $IMAGE_NAME
