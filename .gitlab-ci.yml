@@ -3,12 +3,11 @@ stages:
   - push
 
 variables:
-  DOCKER_HUB_USERNAME: "rimishghimire"
-  DOCKER_HUB_PASSWORD: "your_dockerhub_password"
   IMAGE_NAME: "rimishghimire/assignment_22177669d:step3"
 
 before_script:
-  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+  # Log in to Docker Hub using hardcoded credentials
+  - docker login -u rimishghimire -p monkeyDluffy1
 
 build:
   stage: build
