@@ -17,9 +17,15 @@ build_image:
   services:
     - docker:28.3.3-dind
   variables:
-    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_HOST: tcp://docker:2375/   # Required for DinD
+    DOCKER_TLS_CERTDIR: ""             # Disable TLS to avoid connection issues
+    IMAGE_TAG: $REGISTRY_USER/assignmnety_22177669d:step5-a1b2c3d
   before_script:
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
-    - docker build -t $REGISTRY_USER/assignmnety_22177669d:step4 .
-    - docker push $REGISTRY_USER/assignmnety_22177669d:step4
+    - echo "docker build -t $IMAGE_TAG ."
+    - docker build -t $IMAGE_TAG .
+    - echo "docker push $IMAGE_TAG"
+    - docker push $IMAGE_TAG
+only:
+    - main
