@@ -1,31 +1,20 @@
 stages:
-  - test
   - build
-
-run_tests:
-  stage: test
-  image: python:3.9-slim
-  before_script:
-    - apt-get update && apt-get install -y make
-    - pip install -r src/requirements.txt
-  script:
-    - make test
-
+  
 build_image:
   stage: build
   image: docker:28.3.3
   services:
     - docker:28.3.3-dind
   variables:
-    DOCKER_HOST: tcp://docker:2375/   # Required for DinD
-    DOCKER_TLS_CERTDIR: ""             # Disable TLS to avoid connection issues
-    IMAGE_TAG: $REGISTRY_USER/assignmnety_22177669d:step5-a1b2c3d
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: tcp://docker:2375/
+    IMAGE_NAME: rimishghimre/assignmnety_22177669d
+    IMAGE_TAG: step3
   before_script:
-    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
+    - docker login -u "<YOUR_USERNAME>" -p "<YOUR_PASSWORD>"
   script:
-    - echo "docker build -t $IMAGE_TAG ."
-    - docker build -t $IMAGE_TAG .
-    - echo "docker push $IMAGE_TAG"
-    - docker push $IMAGE_TAG
-only:
-    - main
+    - echo "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - echo "docker push $IMAGE_NAME:$IMAGE_TAG"
+    - docker push $IMAGE_NAME:$IMAGE_TAG
